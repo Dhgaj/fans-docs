@@ -1,0 +1,143 @@
+# Hugo 站点基本配置
+baseURL = "https://fans-docs.pages.dev/"             # 网站根URL，用于Cloudflare Pages部署
+languageCode = "zh-CN"                               # 网站语言代码
+title = "技术学习笔记"                                 # 网站标题
+theme = "PaperMod"                                   # 使用的Hugo主题
+defaultContentLanguage = "zh-cn"                     # 默认内容语言
+
+# 站点参数配置
+[params]
+env = "production"                                            # 环境模式：development/production
+title = "技术学习笔记"                                          # 站点标题（用于SEO）
+description = "个人技术学习笔记和编程经验分享"                     # 站点描述（用于SEO）
+keywords = ["技术笔记", "学习记录", "编程", "开发", "技术总结"]    # SEO关键词
+author = "LianSifan"                                          # 作者名称
+
+# 分页设置
+[pagination]
+pagerSize = 8                                       # 每页显示的文章数量
+
+# 页面模式设置
+mode = "auto"                            # 主题模式：auto/light/dark
+
+# 功能开关配置
+ShowReadingTime = true                   # 显示阅读时间
+ShowShareButtons = false                 # 禁用分享按钮
+ShowCodeCopyButtons = true               # 显示代码复制按钮
+ShowPostNavLinks = true                  # 显示文章导航链接
+ShowBreadCrumbs = true                   # 显示面包屑导航
+ShowToc = true                           # 显示文章目录
+ShowRssButtonInSectionTermList = false   # 在分类/标签页不显示RSS按钮
+UseHugoToc = true                        # 使用Hugo内置的目录功能
+ShowLastMod = true                       # 显示文章最后更新时间
+
+# 主页设置
+mainSections = []                        # 主页不自动显示文章列表
+ShowPostsOnHomePage = false              # 禁用主页文章显示
+homeInfoEnabled = true                   # 启用主页信息模式
+
+# 社交链接配置
+[[params.socialIcons]]
+name = "github"                            # 社交平台名称
+url = "https://github.com/Dhgaj/fans-docs" # GitHub仓库链接
+[[params.socialIcons]]
+name = "email"                             # 邮箱联系方式
+url = "mailto:sifanlian@gmail.com"         # 邮箱地址
+
+# 搜索功能配置（使用Fuse.js）
+[params.fuseOpts]
+isCaseSensitive = false                    # 搜索是否区分大小写
+shouldSort = true                          # 搜索结果是否排序
+location = 0                               # 搜索位置权重（0=开头匹配优先）
+distance = 50                              # 搜索距离阈值（更大=更宽松）
+threshold = 0.2                            # 搜索匹配阈值（更小=更精确）
+minMatchCharLength = 1                     # 最小匹配字符长度
+keys = ["title", "summary", "content"]     # 搜索字段：标题、摘要、内容
+
+
+# 导航菜单配置
+[menu]
+[[menu.main]]
+identifier = "posts"            # 菜单项标识符
+name = "学习笔记"                 # 菜单显示名称
+url = "/posts/"                 # 菜单链接URL
+weight = 5                      # 菜单权重（影响排序）
+
+
+[[menu.main]]
+identifier = "categories"       # 分类页菜单
+name = "分类"
+url = "/categories/"
+weight = 15
+
+[[menu.main]]
+identifier = "tags"             # 标签页菜单
+name = "标签"
+url = "/tags/"
+weight = 13
+
+[[menu.main]]
+identifier = "search"           # 搜索页菜单
+name = "搜索"
+url = "/search/"
+weight = 10
+
+[[menu.main]]
+identifier = "learning-schedule"    # 学习计划菜单
+name = "学习计划"
+url = "/learning-schedule/"
+weight = 21
+
+
+[[menu.main]]
+identifier = "announcements"    # 站点公告菜单
+name = "站点公告"
+url = "/announcements/"
+weight = 26
+
+[[menu.main]]
+identifier = "about"            # 关于页菜单
+name = "关于我"
+url = "/about/"
+weight = 30
+title = "了解更多关于我的信息"
+
+[[menu.main]]
+identifier = "feedback"         # 反馈菜单
+name = "反馈"
+url = "/feedback/"
+weight = 35
+
+# Markdown和代码高亮配置
+[markup]
+[markup.goldmark]
+[markup.goldmark.renderer]
+unsafe = true                   # 允许在Markdown中使用HTML标签
+
+[markup.highlight]
+anchorLineNos = false           # 行号不使用锚点
+codeFences = true               # 启用代码围栏
+guessSyntax = false             # 不自动猜测语法
+hl_Lines = ""                   # 高亮行配置
+lineAnchors = ""                # 行锚点配置
+lineNoStart = 1                 # 行号起始值
+lineNos = false                 # 不显示行号
+lineNumbersInTable = true       # 在表格中显示行号
+noClasses = false               # 使用CSS类而非内联样式
+style = "github"                # 代码高亮主题
+tabWidth = 4                    # Tab缩进宽度
+
+# 输出格式配置
+[outputs]
+home = ["HTML", "JSON"]         # 首页输出格式：HTML页面、JSON搜索
+
+# 错误页面配置
+[server]
+[[server.redirects]]
+from = "/**"                    # 匹配所有未找到的页面
+to = "/404.html"                # 重定向到404页面
+status = 404                    # HTTP状态码
+[[server.redirects]]
+from = "/403/**"                # 匹配403相关页面
+to = "/403.html"                # 重定向到403页面
+status = 403                    # HTTP状态码

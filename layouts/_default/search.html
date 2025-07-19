@@ -1,0 +1,173 @@
+{{- define "main" }}
+
+{{- partial "breadcrumbs.html" . }}
+
+<div style="display: flex; justify-content: center; width: 100%;">
+<div style="max-width: 800px; width: 100%; padding: 0 2rem;">
+
+<header class="page-header">
+    <h1>{{- (printf "%s&nbsp;" .Title ) | htmlUnescape -}}
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+    </h1>
+    {{- if .Params.description }}
+    <div class="post-description">{{ .Params.description }}</div>
+    {{- end }}
+</header>
+
+<div id="searchbox">
+    <input id="searchInput" autofocus placeholder="{{ .Params.placeholder | default (printf "%s ↵" .Title) }}"
+        aria-label="search" type="search" autocomplete="off" maxlength="64">
+    <ul id="searchResults" aria-label="search results"></ul>
+</div>
+
+{{- if .Content }}
+<div class="post-content">
+  {{ .Content }}
+</div>
+{{- end }}
+
+</div>
+</div>
+
+<!-- 搜索脚本由 PaperMod 主题自动加载 -->
+
+<style>
+/* 调整面包屑和标题之间的间距 */
+.breadcrumbs {
+  margin-top: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.page-header {
+  margin-top: 0;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.page-header h1 {
+  margin-top: 0;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.post-description {
+  color: var(--secondary);
+  font-size: 1.1rem;
+}
+
+#searchbox {
+  position: relative;
+  max-width: 100%;
+  margin: 2rem 0;
+}
+
+#searchInput {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  font-size: 1.1rem;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  background: var(--entry);
+  color: var(--content);
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+#searchInput:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
+}
+
+#searchResults {
+  margin-top: 1rem;
+  list-style: none;
+  padding: 0;
+}
+
+.search-result {
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  background: var(--entry);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.search-result:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.search-result h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.3rem;
+}
+
+.search-result h3 a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.search-result h3 a:hover {
+  text-decoration: underline;
+}
+
+.search-result-summary {
+  color: var(--secondary);
+  margin: 0.5rem 0;
+  line-height: 1.6;
+}
+
+.search-result-meta {
+  font-size: 0.9rem;
+  color: var(--secondary);
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.search-stats {
+  margin: 1rem 0;
+  color: var(--secondary);
+  font-size: 0.9rem;
+}
+
+.search-no-results {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--secondary);
+}
+
+.search-no-results h3 {
+  margin-bottom: 1rem;
+  color: var(--content);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  #searchInput {
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+  }
+  
+  .search-result {
+    padding: 1rem;
+  }
+  
+  .search-result-meta {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+</style>
+
+{{- end }}{{/* end main */}}

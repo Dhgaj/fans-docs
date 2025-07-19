@@ -1,0 +1,197 @@
+{{ define "main" }}
+<div class="post">
+  <header class="post-header">
+    <h1 class="post-title">{{ .Title }}</h1>
+  </header>
+
+  <div class="post-content">
+    <div style="text-align: center; padding: 2rem 0">
+      <div class="error-number">403</div>
+
+      <h2 class="error-title forbidden">访问被拒绝</h2>
+
+      <p class="error-description">
+        哎呀！这里设置了隐形屏障，您暂时无法通过呢 🚧
+      </p>
+
+      <div class="button-container">
+        <a href="/" class="error-button primary"> 🏠 返回首页 </a>
+        <a href="/posts/" class="error-button success"> 📚 学习笔记 </a>
+        <a href="/search/" class="error-button warning"> 🔍 搜索内容 </a>
+        <a href="/about/" class="error-button info"> 👤 关于我 </a>
+      </div>
+
+      <div class="error-info">
+        <h3>⚠️ 可能的原因</h3>
+        <ul>
+          <li>页面需要特殊权限</li>
+          <li>访问频率过高被限制</li>
+          <li>来源不被允许</li>
+          <li>维护期间暂停访问</li>
+        </ul>
+      </div>
+
+      <div class="error-suggestions">
+        <h3>💡 建议</h3>
+        <ul>
+          <li>检查您的登录状态</li>
+          <li>稍后重试访问</li>
+          <li>清除浏览器缓存</li>
+          <li>联系管理员获取帮助</li>
+        </ul>
+      </div>
+
+      <div class="error-contact">
+        <p>如果问题持续存在，请联系我们：</p>
+        <p>
+          📮 邮箱：<a href="mailto:sifanlian@gmail.com">sifanlian@gmail.com</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .error-number {
+    font-size: 6rem;
+    color: var(--primary);
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+
+  .error-title {
+    color: var(--primary);
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+  }
+
+  .error-title.forbidden {
+    color: #dc3545;
+  }
+
+  .error-description {
+    color: var(--secondary);
+    margin-bottom: 3rem;
+    font-size: 1.1rem;
+  }
+
+  .button-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .error-button {
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    border-radius: 4px;
+    display: inline-block;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .error-button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  .error-button.primary {
+    background: #007acc;
+    color: white;
+  }
+
+  .error-button.success {
+    background: #28a745;
+    color: white;
+  }
+
+  .error-button.warning {
+    background: #ffc107;
+    color: #212529;
+  }
+
+  .error-button.info {
+    background: #17a2b8;
+    color: white;
+  }
+
+  .error-info,
+  .error-suggestions {
+    background: var(--code-bg);
+    padding: 2rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+    border: 2px solid var(--border);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* 白天模式额外样式 */
+  [data-theme="light"] .error-info,
+  [data-theme="light"] .error-suggestions {
+    background: #f8f9fa;
+    border-color: #dee2e6;
+  }
+
+  /* 夜间模式额外样式 */
+  [data-theme="dark"] .error-info,
+  [data-theme="dark"] .error-suggestions {
+    background: #2d3748;
+    border-color: #4a5568;
+  }
+
+  .error-info h3,
+  .error-suggestions h3 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+  }
+
+  .error-info ul,
+  .error-suggestions ul {
+    text-align: left;
+    color: var(--secondary);
+    max-width: 400px;
+    margin: 0 auto;
+    padding-left: 1.5rem;
+  }
+
+  .error-info li,
+  .error-suggestions li {
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+  }
+
+  .error-contact {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .error-contact p {
+    color: var(--secondary);
+    margin-bottom: 1rem;
+  }
+
+  .error-contact a {
+    color: #007acc;
+    text-decoration: none;
+  }
+
+  .error-contact a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .error-button {
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+
+    .error-number {
+      font-size: 4rem;
+    }
+  }
+</style>
+{{ end }}

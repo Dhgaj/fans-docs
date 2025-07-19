@@ -1,0 +1,174 @@
+{{ define "main" }}
+<div class="post">
+  <header class="post-header">
+    <h1 class="post-title">{{ .Title }}</h1>
+  </header>
+
+  <div class="post-content">
+    <div style="text-align: center; padding: 2rem 0">
+      <div class="error-number">404</div>
+
+      <h2 class="error-title">页面未找到</h2>
+
+      <p class="error-description">哎呀！这个页面似乎去了另一个时空 🚀</p>
+
+      <div class="button-container">
+        <a href="/" class="error-button primary"> 🏠 返回首页 </a>
+        <a href="/posts/" class="error-button success"> 📚 学习笔记 </a>
+        <a href="/search/" class="error-button warning"> 🔍 搜索内容 </a>
+        <a href="/tags/" class="error-button info"> 🏷️ 技术标签 </a>
+      </div>
+
+      <div class="error-info">
+        <h3>可能的原因</h3>
+        <ul>
+          <li>输入的网址有误</li>
+          <li>页面已被删除或移动</li>
+          <li>链接已过期</li>
+        </ul>
+      </div>
+
+      <div class="error-contact">
+        <p>如果您认为这是一个错误，请联系我：</p>
+        <p>
+          📮 邮箱：<a href="mailto:sifanlian@gmail.com">sifanlian@gmail.com</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .error-number {
+    font-size: 6rem;
+    color: var(--primary);
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+
+  .error-title {
+    color: var(--primary);
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+  }
+
+  .error-description {
+    color: var(--secondary);
+    margin-bottom: 3rem;
+    font-size: 1.1rem;
+  }
+
+  .button-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .error-button {
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    border-radius: 4px;
+    display: inline-block;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .error-button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  .error-button.primary {
+    background: #007acc;
+    color: white;
+  }
+
+  .error-button.success {
+    background: #28a745;
+    color: white;
+  }
+
+  .error-button.warning {
+    background: #ffc107;
+    color: #212529;
+  }
+
+  .error-button.info {
+    background: #6f42c1;
+    color: white;
+  }
+
+  .error-info {
+    background: var(--code-bg);
+    padding: 2rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+    border: 2px solid var(--border);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* 白天模式额外样式 */
+  [data-theme="light"] .error-info {
+    background: #f8f9fa;
+    border-color: #9097a7;
+  }
+
+  /* 夜间模式额外样式 */
+  [data-theme="dark"] .error-info {
+    background: #2d3748;
+    border-color: #4a5568;
+  }
+
+  .error-info h3 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+  }
+
+  .error-info ul {
+    text-align: left;
+    color: var(--secondary);
+    max-width: 400px;
+    margin: 0 auto;
+    padding-left: 1.5rem;
+  }
+
+  .error-info li {
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+  }
+
+  .error-contact {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .error-contact p {
+    color: var(--secondary);
+    margin-bottom: 1rem;
+  }
+
+  .error-contact a {
+    color: #007acc;
+    text-decoration: none;
+  }
+
+  .error-contact a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .error-button {
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+
+    .error-number {
+      font-size: 4rem;
+    }
+  }
+</style>
+{{ end }}

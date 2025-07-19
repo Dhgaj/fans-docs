@@ -1,0 +1,234 @@
+{{- define "main" }}
+
+{{- partial "breadcrumbs.html" . }}
+
+<div style="display: flex; justify-content: center; width: 100%;">
+<div style="max-width: 1000px; width: 100%; padding: 0 2rem;">
+
+<header class="page-header">
+    <h1>{{- .Title }}</h1>
+    {{- if .Params.description }}
+    <div class="post-description">{{ .Params.description }}</div>
+    {{- end }}
+</header>
+
+{{- if .Content }}
+<div class="post-content">
+    {{ .Content }}
+</div>
+{{- end }}
+
+{{- $type := .Type }}
+<div class="terms-grid">
+    {{- range $name, $taxonomy := .Site.Taxonomies }}
+        {{- if eq $name $type }}
+            {{- $sortedTerms := sort $taxonomy.ByCount "Count" "desc" }}
+            {{- range $sortedTerms }}
+                {{- $term := .Term }}
+                {{- $count := .Count }}
+                <div class="term-card">
+                    <div class="term-header">
+                        <h3 class="term-title">
+                            <a href="{{ .Page.Permalink }}">{{ .Page.Title }}</a>
+                        </h3>
+                        <span class="term-count">{{ $count }} 篇文章</span>
+                    </div>
+                    <div class="term-articles">
+                        {{- range first 3 .Pages }}
+                            <div class="term-article">
+                                <a href="{{ .Permalink }}" class="article-link">{{ .Title }}</a>
+                                <span class="article-date">{{ .Date.Format "01-02" }}</span>
+                            </div>
+                        {{- end }}
+                        {{- if gt $count 3 }}
+                            <div class="term-more">
+                                <a href="{{ .Page.Permalink }}">查看全部 {{ $count }} 篇 →</a>
+                            </div>
+                        {{- end }}
+                    </div>
+                </div>
+            {{- end }}
+        {{- end }}
+    {{- end }}
+</div>
+
+</div>
+</div>
+
+<style>
+/* 面包屑间距 */
+.breadcrumbs {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+/* 页面头部 */
+.page-header {
+    text-align: left;
+    margin-bottom: 2rem;
+}
+
+.page-header h1 {
+    font-size: 40px;
+    margin-bottom: 2px;
+}
+
+.post-description {
+    color: var(--secondary);
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+}
+
+/* 术语网格布局 */
+.terms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+/* 术语卡片 */
+.term-card {
+    background: var(--entry);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.term-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* 术语头部 */
+.term-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    gap: 1rem;
+}
+
+.term-title {
+    margin: 0;
+    flex: 1;
+}
+
+.term-title a {
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.term-title a:hover {
+    text-decoration: underline;
+}
+
+.term-count {
+    background: var(--primary);
+    color: var(--theme);
+    font-size: 0.85rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+/* 术语文章列表 */
+.term-articles {
+    margin-top: 1rem;
+}
+
+.term-article {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-light);
+    gap: 1rem;
+}
+
+.term-article:last-child {
+    border-bottom: none;
+}
+
+.article-link {
+    color: var(--content);
+    text-decoration: none;
+    font-size: 0.9rem;
+    flex: 1;
+    line-height: 1.4;
+}
+
+.article-link:hover {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+.article-date {
+    color: var(--secondary);
+    font-size: 0.8rem;
+    white-space: nowrap;
+}
+
+.term-more {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-light);
+}
+
+.term-more a {
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.term-more a:hover {
+    text-decoration: underline;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .page-header h1 {
+        font-size: 32px;
+    }
+    
+    .terms-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .term-card {
+        padding: 1.25rem;
+    }
+    
+    .term-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .term-count {
+        align-self: flex-end;
+    }
+}
+
+@media (max-width: 480px) {
+    .term-article {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+    
+    .article-date {
+        align-self: flex-end;
+    }
+}
+</style>
+
+{{- end }}{{/* end main */}}

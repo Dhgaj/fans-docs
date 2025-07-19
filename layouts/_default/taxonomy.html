@@ -1,0 +1,321 @@
+{{- define "main" }}
+
+{{- partial "breadcrumbs.html" . }}
+
+<div style="display: flex; justify-content: center; width: 100%;">
+<div style="max-width: 900px; width: 100%; padding: 0 2rem;">
+
+<header class="page-header">
+    <h1>
+        {{- if eq .Type "tags" }}🏷️{{ else if eq .Type "categories" }}📁{{ end }}
+        {{ .Title }}
+        <span class="article-count">({{ len .Pages }} 篇文章)</span>
+    </h1>
+    <div class="term-meta">
+        {{- if .Params.description }}
+        <p class="term-description">{{ .Params.description }}</p>
+        {{- end }}
+    </div>
+</header>
+
+<div class="articles-section">
+    <div class="articles-header">
+        <h2>📚 相关文章</h2>
+        <div class="sort-info">按发布时间排序</div>
+    </div>
+    
+    <div class="articles-grid">
+        {{- range .Pages }}
+        <article class="article-card">
+            <div class="article-header">
+                <h3 class="article-title">
+                    <a href="{{ .Permalink }}">{{ .Title }}</a>
+                </h3>
+                <div class="article-meta">
+                    <time class="article-date" datetime="{{ .Date.Format "2006-01-02" }}">
+                        {{ .Date.Format "2006年1月2日" }}
+                    </time>
+                    {{- if .Params.author }}
+                    <span class="article-author">{{ .Params.author }}</span>
+                    {{- end }}
+                </div>
+            </div>
+            
+            {{- if .Summary }}
+            <div class="article-summary">
+                {{ .Summary | truncate 120 }}
+            </div>
+            {{- end }}
+            
+            <div class="article-footer">
+                <div class="article-tags">
+                    {{- if eq $.Type "categories" }}
+                        {{- range .Params.tags }}
+                        <span class="tag">🏷️ {{ . }}</span>
+                        {{- end }}
+                    {{- else }}
+                        {{- range .Params.categories }}
+                        <span class="category">📁 {{ . }}</span>
+                        {{- end }}
+                    {{- end }}
+                </div>
+                <div class="article-stats">
+                    {{- if .ReadingTime }}
+                    <span class="reading-time">⏱️ {{ .ReadingTime }}分钟</span>
+                    {{- end }}
+                </div>
+            </div>
+        </article>
+        {{- end }}
+    </div>
+</div>
+
+<!-- 相关导航 -->
+<div class="related-navigation">
+    <h3>🔗 相关页面</h3>
+    <div class="nav-links">
+        {{- if eq .Type "tags" }}
+        <a href="/categories/" class="nav-link">📁 文章分类</a>
+        {{- else }}
+        <a href="/tags/" class="nav-link">🏷️ 技术标签</a>
+        {{- end }}
+        <a href="/learning-notes/" class="nav-link">📚 学习笔记</a>
+        <a href="/search/" class="nav-link">🔍 智能搜索</a>
+    </div>
+</div>
+
+</div>
+</div>
+
+<style>
+/* 面包屑间距 */
+.breadcrumbs {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+/* 页面头部 */
+.page-header {
+    text-align: left;
+    margin-bottom: 2rem;
+}
+
+.page-header h1 {
+    font-size: 2.25rem;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.article-count {
+    color: var(--secondary);
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.term-description {
+    color: var(--secondary);
+    font-size: 1.1rem;
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* 文章区域 */
+.articles-section {
+    margin-bottom: 3rem;
+}
+
+.articles-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border);
+}
+
+.articles-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.sort-info {
+    color: var(--secondary);
+    font-size: 0.9rem;
+}
+
+/* 文章网格 */
+.articles-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+/* 文章卡片 */
+.article-card {
+    background: var(--entry);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.article-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* 文章头部 */
+.article-header {
+    margin-bottom: 1rem;
+}
+
+.article-title {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.25rem;
+}
+
+.article-title a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.article-title a:hover {
+    text-decoration: underline;
+}
+
+.article-meta {
+    display: flex;
+    gap: 1rem;
+    color: var(--secondary);
+    font-size: 0.9rem;
+}
+
+.article-date {
+    color: var(--secondary);
+}
+
+.article-author {
+    color: var(--secondary);
+}
+
+.article-author::before {
+    content: "👤 ";
+}
+
+/* 文章摘要 */
+.article-summary {
+    color: var(--content);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+/* 文章底部 */
+.article-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-light);
+}
+
+.article-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tag, .category {
+    background: var(--code-bg);
+    color: var(--content);
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    border: 1px solid var(--border);
+}
+
+.article-stats {
+    color: var(--secondary);
+    font-size: 0.85rem;
+}
+
+/* 相关导航 */
+.related-navigation {
+    background: var(--entry);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.related-navigation h3 {
+    margin: 0 0 1rem 0;
+    color: var(--content);
+}
+
+.nav-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.nav-link {
+    background: var(--primary);
+    color: var(--theme);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .page-header h1 {
+        font-size: 2rem;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+    
+    .articles-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .article-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+    
+    .nav-links {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .article-card {
+        padding: 1.25rem;
+    }
+    
+    .article-meta {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+}
+</style>
+
+{{- end }}{{/* end main */}}

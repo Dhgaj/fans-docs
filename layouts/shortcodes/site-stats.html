@@ -1,0 +1,72 @@
+{{- $postsCount := len (where site.RegularPages "Section" "posts") -}}
+{{- $tagsCount := len site.Taxonomies.tags -}}
+{{- $categoriesCount := len site.Taxonomies.categories -}}
+
+<div class="site-stats">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <span class="stat-number">{{ $postsCount }}</span>
+      <span class="stat-label">技术文章</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">{{ $tagsCount }}</span>
+      <span class="stat-label">标签</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">{{ $categoriesCount }}</span>
+      <span class="stat-label">分类</span>
+    </div>
+  </div>
+</div>
+
+<style>
+.site-stats {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.stats-grid {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  background: var(--entry);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  min-width: 100px;
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  color: var(--secondary);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .stats-grid {
+    gap: 1rem;
+  }
+  
+  .stat-item {
+    min-width: 80px;
+    padding: 0.8rem;
+  }
+  
+  .stat-number {
+    font-size: 1.5rem;
+  }
+}
+</style>

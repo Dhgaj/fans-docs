@@ -1,0 +1,20 @@
+{{- define "main" }}
+
+{{- if .Content }}
+<div class="post-content">
+    {{- $content := .Content -}}
+    {{- $postsCount := len (where site.RegularPages "Section" "posts") -}}
+    {{- $tagsCount := len site.Taxonomies.tags -}}
+    {{- $categoriesCount := len site.Taxonomies.categories -}}
+    {{- $lastUpdate := now.Format "2006 年 1 月 2 日" -}}
+    
+    {{- $content = replace $content "{{ len (where site.RegularPages &ldquo;Section&rdquo; &ldquo;posts&rdquo;) }}" (string $postsCount) -}}
+    {{- $content = replace $content "{{ len site.Taxonomies.tags }}" (string $tagsCount) -}}
+    {{- $content = replace $content "{{ len site.Taxonomies.categories }}" (string $categoriesCount) -}}
+    {{- $content = replace $content "{{ now.Format &ldquo;2006 年 1 月 2 日&rdquo; }}" $lastUpdate -}}
+    
+    {{- $content | safeHTML }}
+</div>
+{{- end }}
+
+{{- end }}{{/* end main */}}

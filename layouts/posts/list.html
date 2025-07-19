@@ -1,0 +1,178 @@
+{{- define "main" }}
+
+{{- partial "breadcrumbs.html" . }}
+
+<div style="display: flex; justify-content: center; width: 100%;">
+<div style="max-width: 1000px; width: 100%; padding: 0 2rem;">
+
+<header class="page-header">
+  <h1>{{ .Title }}</h1>
+  {{- if .Params.description }}
+  <div class="post-description">{{ .Params.description }}</div>
+  {{- end }}
+</header>
+
+{{- if .Content }}
+<div class="post-content">
+  {{ .Content }}
+</div>
+{{- end }}
+
+{{- $pages := where site.RegularPages "Section" "posts" }}
+{{- $paginator := .Paginate $pages }}
+
+<div class="posts-grid">
+  {{- range $paginator.Pages }}
+  <article class="post-card">
+    <div class="post-meta">
+      <time datetime="{{ .Date.Format "2006-01-02" }}">
+        {{ .Date.Format "2006年1月2日" }}
+      </time>
+      {{- with .Params.categories }}
+      <span class="post-category">
+        {{- range first 1 . }}
+        <a href="{{ "/categories/" | relLangURL }}{{ . | urlize }}">{{ . }}</a>
+        {{- end }}
+      </span>
+      {{- end }}
+    </div>
+    
+    <h2 class="post-title">
+      <a href="{{ .Permalink }}">{{ .Title }}</a>
+    </h2>
+    
+    {{- if .Params.description }}
+    <p class="post-summary">{{ .Params.description }}</p>
+    {{- else if .Summary }}
+    <p class="post-summary">{{ .Summary }}</p>
+    {{- end }}
+    
+    {{- with .Params.tags }}
+    <div class="post-tags">
+      {{- range first 3 . }}
+      <span class="tag">{{ . }}</span>
+      {{- end }}
+    </div>
+    {{- end }}
+  </article>
+  {{- end }}
+</div>
+
+{{- template "_internal/pagination.html" . }}
+
+</div>
+</div>
+
+<style>
+.breadcrumbs {
+  margin-top: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.page-header {
+  margin-top: 0;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.page-header h1 {
+  margin-top: 0;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.post-description {
+  color: var(--secondary);
+  font-size: 1.1rem;
+}
+
+.posts-grid {
+  display: grid;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.post-card {
+  background: var(--entry);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.post-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.post-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: var(--secondary);
+}
+
+.post-category a {
+  color: var(--primary);
+  text-decoration: none;
+  background: rgba(var(--primary-rgb), 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.post-title {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.post-title a {
+  color: var(--content);
+  text-decoration: none;
+}
+
+.post-title a:hover {
+  color: var(--primary);
+}
+
+.post-summary {
+  color: var(--secondary);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  background: var(--code-bg);
+  color: var(--secondary);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+@media (max-width: 768px) {
+  .page-header h1 {
+    font-size: 2rem;
+  }
+  
+  .post-card {
+    padding: 1.5rem;
+  }
+  
+  .post-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}
+</style>
+
+{{- end }}{{/* end main */}}
